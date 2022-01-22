@@ -1,8 +1,14 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const WebpackBar = require('webpackbar');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
 
+const isDevelopment = process.env.NODE_ENV === 'development';
+
 module.exports = {
+  context: path.resolve(__dirname),
+  devtool: 'source-map',
   entry: {
     popup: './src/popup.jsx',
   },
@@ -14,7 +20,7 @@ module.exports = {
     alias: {
       components: path.resolve(__dirname, 'src/components'),
     },
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', '.scss'],
   },
   module: {
     rules: [
@@ -38,6 +44,10 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.s[ac]ss$/i,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
+      },
     ],
   },
   plugins: [
@@ -47,6 +57,12 @@ module.exports = {
     }),
     new CopyPlugin({
       patterns: [{ from: 'public' }],
+    }),
+
+    new WebpackBar(),
+    new MiniCssExtractPlugin({
+      filename: isDevelopment ? '[name].css' : '[name].[hash].css',
+      chunkFilename: isDevelopment ? '[id].css' : '[id].[hash].css',
     }),
   ],
 };
