@@ -33,10 +33,12 @@
   },
   "devDependencies": {
     "@babel/core": "^7.16.10",
+    "@babel/plugin-transform-runtime": "^7.16.10",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
     "babel-loader": "^8.2.3",
     "copy-webpack-plugin": "^10.2.1",
+    "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
     "husky": "^7.0.4",
     "lint-staged": "^11.1.1",

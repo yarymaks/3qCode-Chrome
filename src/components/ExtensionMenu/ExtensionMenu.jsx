@@ -1,14 +1,17 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import FirstTab from '../FirstTab';
 import SecondTab from '../SecondTab';
 import ThirdTab from '../ThirdTab';
 import FourthTab from '../FourthTab';
+import { fetchSerials } from '../../API/serialsAPI';
 
 // const optionRender = [<FirstTab />, <SecondTab />, <ThirdTab />, <FourthTab />];
 
 const ExtensionMenu = () => {
   const [numberOfMenu, setNumberOfMenu] = useState(0);
+  const [serialsData, setSerialsData] = useState([]);
+  const [error, setError] = useState(false);
 
   const changeTabs = e => {
     e.preventDefault();
@@ -28,6 +31,20 @@ const ExtensionMenu = () => {
     return e.target.blur();
   };
 
+  const fetchData = async () => {
+    try {
+      const serials = await fetchSerials();
+      setSerialsData(serials);
+      setError(false);
+    } catch (err) {
+      setError(`${err}`);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <>
       <section className="tabs">
@@ -46,10 +63,11 @@ const ExtensionMenu = () => {
           </button>
         </div>
       </section>
+      {error && <p>Oops, we have a problem with server : {error} </p>}
       {numberOfMenu === 0 ? (
-        <FirstTab />
+        <FirstTab serials={serialsData} />
       ) : numberOfMenu === 1 ? (
-        <SecondTab />
+        <SecondTab serialsData={serialsData} />
       ) : numberOfMenu === 2 ? (
         <ThirdTab />
       ) : (
