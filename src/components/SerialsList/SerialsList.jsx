@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import ExtensionToggle from '../ExtensionToggle';
+import ExtensionMenu from '../ExtensionMenu';
 
 const SerialsList = () => {
   const [status, setStatus] = useState(false);
@@ -12,7 +13,7 @@ const SerialsList = () => {
     <div>
       <img src="./logo.png" alt="logo" width="300px" />
       <ExtensionToggle switchStatus={switchStatus} />
-      {status ? <p>WOW</p> : ''}
+      {status ? <ExtensionMenu /> : ''}
     </div>
   );
 };
