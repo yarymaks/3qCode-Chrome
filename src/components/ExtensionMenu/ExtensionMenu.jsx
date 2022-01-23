@@ -24,7 +24,6 @@ const ExtensionMenu = () => {
     if (runtimeData.length === 0) {
       runtimeSerials();
     } else if (runtimeData.length !== 0) {
-      let biggest = '';
       setSmallestSerial(
         runtimeData.reduce((prev, curr) => {
           return prev.runtime < curr.runtime ? prev : curr;
@@ -101,7 +100,10 @@ const ExtensionMenu = () => {
           biggestSerial={biggestSerial}
         />
       ) : (
-        <FourthTab />
+        <FourthTab
+          smallestSerialCastId={smallestSerial.id}
+          biggestSerialCastId={biggestSerial.id}
+        />
       )}
     </>
   );
