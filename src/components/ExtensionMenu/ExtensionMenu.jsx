@@ -43,7 +43,9 @@ const ExtensionMenu = ({ serialsData }) => {
     return serial._embedded.show.name.toLowerCase().includes(normalizedFilter);
   });
   chrome.action.setBadgeBackgroundColor({ color: [255, 0, 0, 255] });
-  chrome.action.setBadgeText({ text: `${filteredSerials.length + 1}` });
+  chrome.action.setBadgeText({
+    text: `${filteredSerials.length > 0 ? filteredSerials.length + 1 : 0}`,
+  });
   const runtimeSerials = () => {
     filteredSerials.map(({ _embedded }) => {
       if (_embedded.show.runtime !== null) {
