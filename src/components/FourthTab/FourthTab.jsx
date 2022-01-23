@@ -54,7 +54,9 @@ const FourthTab = ({ smallestSerialCastId, biggestSerialCastId }) => {
           return (
             <ul key={cast.person.id}>
               <li>Name: {cast.person.name}</li>
-              <li>Birthday: {cast.person.birthday}</li>
+              <li>
+                Birthday: {new Date(cast.person.birthday).toLocaleDateString()}
+              </li>
             </ul>
           );
         })}
