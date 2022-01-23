@@ -12,13 +12,52 @@ import { fetchSerials } from '../../API/serialsAPI';
 const ExtensionMenu = () => {
   const [numberOfMenu, setNumberOfMenu] = useState(0);
   const [serialsData, setSerialsData] = useState([]);
+  const [runtimeData, setRuntimeData] = useState([]);
+  const [smallestSerial, setSmallestSerial] = useState([]);
+  const [biggestSerial, setBiggestSerial] = useState([]);
   const [error, setError] = useState(false);
 
   useEffect(() => {
     if (serialsData.length === 0) {
       fetchData();
     }
-  }, [serialsData]);
+    if (runtimeData.length === 0) {
+      runtimeSerials();
+    } else if (runtimeData.length !== 0) {
+      let biggest = '';
+      setSmallestSerial(
+        runtimeData.reduce((prev, curr) => {
+          return prev.runtime < curr.runtime ? prev : curr;
+        }),
+      );
+      setBiggestSerial(
+        runtimeData.reduce((prev, curr) => {
+          return prev.runtime > curr.runtime ? prev : curr;
+        }),
+      );
+    }
+  }, [serialsData, runtimeData]);
+
+  const runtimeSerials = () => {
+    serialsData.map(({ _embedded }) => {
+      if (_embedded.show.runtime !== null) {
+        let image;
+        for (let key in _embedded.show.image) {
+          if (key === 'original') image = _embedded.show.image[key];
+        }
+        const newValue = {
+          runtime: _embedded.show.runtime,
+          id: _embedded.show.id,
+          image: image,
+          name: _embedded.show.name,
+          type: _embedded.show.type,
+          premiered: _embedded.show.premiered,
+          url: _embedded.show.url,
+        };
+        setRuntimeData(prevArray => [...prevArray, newValue]);
+      }
+    });
+  };
 
   const changeTabs = e => {
     e.preventDefault();
@@ -57,7 +96,10 @@ const ExtensionMenu = () => {
       ) : numberOfMenu === 1 ? (
         <SecondTab serialsData={serialsData} />
       ) : numberOfMenu === 2 ? (
-        <ThirdTab serialsData={serialsData} />
+        <ThirdTab
+          smallestSerial={smallestSerial}
+          biggestSerial={biggestSerial}
+        />
       ) : (
         <FourthTab />
       )}
