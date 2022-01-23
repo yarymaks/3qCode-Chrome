@@ -12,7 +12,7 @@ const FourthTab = ({ smallestSerialCastId, biggestSerialCastId }) => {
       fetchCast();
     }
     if (cast.length === 0) {
-      getStackPerson();
+      getOldestPerson();
     }
   }, [castData, cast]);
 
@@ -28,27 +28,15 @@ const FourthTab = ({ smallestSerialCastId, biggestSerialCastId }) => {
     }
   };
 
-  const getStackPerson = () => {
-    // castData.map(index => {
-    //   index.map(personData => {
-    //     if (personData.person.birthday !== null) {
-    //       const newValue = {
-    //         birthday: personData.person.birthday,
-    //         id: personData.person.id,
-    //         name: personData.person.name,
-    //       };
-    //       console.log(newValue.birthday);
-    //       setCast(prev => [...prev, newValue]);
-    //     }
-    //   });
-    // });
+  const getOldestPerson = () => {
     castData.map(index => {
       setCast(prev => [
         ...prev,
         index.reduce((prevData, currData) => {
           if (currData.birthday !== null) {
-            return new Date(prevData.person.birthday) >
-              new Date(currData.person.birthday)
+            return Math.floor(
+              new Date(prevData.person.birthday).getTime() / 1000,
+            ) < Math.floor(new Date(currData.person.birthday).getTime() / 1000)
               ? prevData
               : currData;
           }
@@ -61,14 +49,16 @@ const FourthTab = ({ smallestSerialCastId, biggestSerialCastId }) => {
     <>
       <h2>Data of oldest person in movies</h2>
       {error && <p>Oops, we have a problem with server : {error} </p>}
-      {cast.map(cast => {
-        return (
-          <ul>
-            <li>Name: {cast.person.name}</li>
-            <li>Birthday: {cast.person.birthday}</li>
-          </ul>
-        );
-      })}
+      <div>
+        {cast.map(cast => {
+          return (
+            <ul key={cast.person.id}>
+              <li>Name: {cast.person.name}</li>
+              <li>Birthday: {cast.person.birthday}</li>
+            </ul>
+          );
+        })}
+      </div>
     </>
   );
 };
