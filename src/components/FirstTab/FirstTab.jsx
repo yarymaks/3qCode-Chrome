@@ -2,6 +2,7 @@ import React from 'react';
 import notAvailable from '../../images/notFound.jpg';
 
 const FirstTab = ({ serials }) => {
+  console.log(serials);
   return (
     <ul>
       {serials.map(({ _embedded }) => {

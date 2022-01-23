@@ -1,11 +1,11 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 
-const SecondTab = ({ serialsData }) => {
+const SecondTab = ({ serials }) => {
   const [premiered, setPremiered] = useState([]);
   const result = {};
   const premieredSerials = () => {
-    serialsData.map(({ _embedded }) => {
+    serials.map(({ _embedded }) => {
       const newValue = _embedded.show.premiered.slice(0, 4);
       setPremiered(prevArray => [...prevArray, newValue]);
     });

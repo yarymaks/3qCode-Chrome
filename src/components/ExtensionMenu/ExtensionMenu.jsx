@@ -5,6 +5,7 @@ import SecondTab from '../SecondTab';
 import ThirdTab from '../ThirdTab';
 import FourthTab from '../FourthTab';
 import TabsList from '../TabsList';
+import Filter from '../Filter';
 import { fetchSerials } from '../../API/serialsAPI';
 
 // const optionRender = [<FirstTab />, <SecondTab />, <ThirdTab />, <FourthTab />];
@@ -15,7 +16,18 @@ const ExtensionMenu = () => {
   const [runtimeData, setRuntimeData] = useState([]);
   const [smallestSerial, setSmallestSerial] = useState([]);
   const [biggestSerial, setBiggestSerial] = useState([]);
+  const [filter, setFilter] = useState('');
   const [error, setError] = useState(false);
+
+  const fetchData = async () => {
+    try {
+      const serials = await fetchSerials();
+      setSerialsData(serials);
+      setError(false);
+    } catch (err) {
+      setError(`${err}`);
+    }
+  };
 
   useEffect(() => {
     if (serialsData.length === 0) {
@@ -37,25 +49,37 @@ const ExtensionMenu = () => {
     }
   }, [serialsData, runtimeData]);
 
+  const changeFilter = e => {
+    setFilter(e.currentTarget.value);
+  };
+
+  const normalizedFilter = filter.toLowerCase();
+
   const runtimeSerials = () => {
-    serialsData.map(({ _embedded }) => {
-      if (_embedded.show.runtime !== null) {
-        let image;
-        for (let key in _embedded.show.image) {
-          if (key === 'original') image = _embedded.show.image[key];
+    serialsData
+      .filter(serial => {
+        return serial._embedded.show.name
+          .toLowerCase()
+          .includes(normalizedFilter);
+      })
+      .map(({ _embedded }) => {
+        if (_embedded.show.runtime !== null) {
+          let image;
+          for (let key in _embedded.show.image) {
+            if (key === 'original') image = _embedded.show.image[key];
+          }
+          const newValue = {
+            runtime: _embedded.show.runtime,
+            id: _embedded.show.id,
+            image: image,
+            name: _embedded.show.name,
+            type: _embedded.show.type,
+            premiered: _embedded.show.premiered,
+            url: _embedded.show.url,
+          };
+          setRuntimeData(prevArray => [...prevArray, newValue]);
         }
-        const newValue = {
-          runtime: _embedded.show.runtime,
-          id: _embedded.show.id,
-          image: image,
-          name: _embedded.show.name,
-          type: _embedded.show.type,
-          premiered: _embedded.show.premiered,
-          url: _embedded.show.url,
-        };
-        setRuntimeData(prevArray => [...prevArray, newValue]);
-      }
-    });
+      });
   };
 
   const changeTabs = e => {
@@ -76,24 +100,30 @@ const ExtensionMenu = () => {
     return e.target.blur();
   };
 
-  const fetchData = async () => {
-    try {
-      const serials = await fetchSerials();
-      setSerialsData(serials);
-      setError(false);
-    } catch (err) {
-      setError(`${err}`);
-    }
-  };
-
   return (
     <>
       <TabsList changeTabs={changeTabs} />
       {error && <p>Oops, we have a problem with server : {error} </p>}
+
       {numberOfMenu === 0 ? (
-        <FirstTab serials={serialsData} />
+        <>
+          <Filter value={filter} onChange={changeFilter} />
+          <FirstTab
+            serials={serialsData.filter(serial => {
+              return serial._embedded.show.name
+                .toLowerCase()
+                .includes(normalizedFilter);
+            })}
+          />
+        </>
       ) : numberOfMenu === 1 ? (
-        <SecondTab serialsData={serialsData} />
+        <SecondTab
+          serials={serialsData.filter(serial => {
+            return serial._embedded.show.name
+              .toLowerCase()
+              .includes(normalizedFilter);
+          })}
+        />
       ) : numberOfMenu === 2 ? (
         <ThirdTab
           smallestSerial={smallestSerial}
