@@ -11,6 +11,7 @@ module.exports = {
   devtool: 'source-map',
   entry: {
     popup: './src/popup.jsx',
+    background: './src/background.js',
   },
   output: {
     path: path.resolve(__dirname, 'dist'),

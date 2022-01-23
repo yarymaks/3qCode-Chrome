@@ -1,5 +1,5 @@
 import React from 'react';
-import notAvailable from '../../../public/notFound.jpg';
+import notAvailable from '../../images/notFound.jpg';
 
 const FirstTab = ({ serials }) => {
   return (

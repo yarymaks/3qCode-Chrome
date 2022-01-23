@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import ExtensionToggle from '../ExtensionToggle';
 import ExtensionMenu from '../ExtensionMenu';
+import logo from '../../images/logo.png';
 
 const SerialsList = () => {
   const [status, setStatus] = useState(false);
@@ -11,7 +12,7 @@ const SerialsList = () => {
 
   return (
     <div>
-      <img src="./logo.png" alt="logo" width="300px" />
+      <img src={logo} alt="logo" width="300px" />
       <ExtensionToggle switchStatus={switchStatus} />
       {status ? <ExtensionMenu /> : ''}
     </div>
