@@ -4,6 +4,7 @@ import FirstTab from '../FirstTab';
 import SecondTab from '../SecondTab';
 import ThirdTab from '../ThirdTab';
 import FourthTab from '../FourthTab';
+import TabsList from '../TabsList';
 import { fetchSerials } from '../../API/serialsAPI';
 
 // const optionRender = [<FirstTab />, <SecondTab />, <ThirdTab />, <FourthTab />];
@@ -12,6 +13,12 @@ const ExtensionMenu = () => {
   const [numberOfMenu, setNumberOfMenu] = useState(0);
   const [serialsData, setSerialsData] = useState([]);
   const [error, setError] = useState(false);
+
+  useEffect(() => {
+    if (serialsData.length === 0) {
+      fetchData();
+    }
+  }, [serialsData]);
 
   const changeTabs = e => {
     e.preventDefault();
@@ -41,35 +48,16 @@ const ExtensionMenu = () => {
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   return (
     <>
-      <section className="tabs">
-        <div className="tabs__container">
-          <button className="tabs__button active" onClick={changeTabs}>
-            Tab1
-          </button>
-          <button className="tabs__button" onClick={changeTabs}>
-            Tab2
-          </button>
-          <button className="tabs__button" onClick={changeTabs}>
-            Tab3
-          </button>
-          <button className="tabs__button" onClick={changeTabs}>
-            Tab4
-          </button>
-        </div>
-      </section>
+      <TabsList changeTabs={changeTabs} />
       {error && <p>Oops, we have a problem with server : {error} </p>}
       {numberOfMenu === 0 ? (
         <FirstTab serials={serialsData} />
       ) : numberOfMenu === 1 ? (
         <SecondTab serialsData={serialsData} />
       ) : numberOfMenu === 2 ? (
-        <ThirdTab />
+        <ThirdTab serialsData={serialsData} />
       ) : (
         <FourthTab />
       )}

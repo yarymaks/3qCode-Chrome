@@ -13,7 +13,6 @@ const SecondTab = ({ serialsData }) => {
 
   useEffect(() => {
     premieredSerials();
-    counter(premiered);
   }, []);
 
   const counter = premiered => {
