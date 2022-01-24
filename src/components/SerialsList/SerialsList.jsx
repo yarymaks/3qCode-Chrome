@@ -10,8 +10,6 @@ const SerialsList = () => {
   const [serialsData, setSerialsData] = useState([]);
   const [error, setError] = useState(false);
 
-  useEffect(() => {}, []);
-
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem('serialsData'));
     data !== null
@@ -22,8 +20,40 @@ const SerialsList = () => {
     const dataStatus = JSON.parse(localStorage.getItem('status'));
     const toggle = document.getElementById('switch-extension-toggle');
     dataStatus ? (toggle.checked = true) : (toggle.checked = false);
+    chrome.action.setIcon({
+      path: {
+        16: '/images/get_started16.png',
+        32: '/images/get_started32.png',
+        48: '/images/get_started48.png',
+        128: '/images/get_started128.png',
+      },
+    });
     setStatus(dataStatus);
+    setEnabledIcons();
   }, []);
+
+  const setEnabledIcons = () => {
+    chrome.action.setIcon({
+      path: {
+        16: '/images/get_started16.png',
+        32: '/images/get_started32.png',
+        48: '/images/get_started48.png',
+        128: '/images/get_started128.png',
+      },
+    });
+  };
+  const setDisabledIcons = () => {
+    chrome.action.setBadgeBackgroundColor({ color: [0, 0, 0, 0] });
+    chrome.action.setBadgeText({ text: `` });
+    chrome.action.setIcon({
+      path: {
+        16: '/images/disabled-16x16.png',
+        32: '/images/disabled-32x32.png',
+        48: '/images/disabled-48x48.png',
+        128: '/images/disabled-128x128.png',
+      },
+    });
+  };
 
   useEffect(() => {
     localStorage.setItem('serialsData', JSON.stringify(serialsData));
@@ -40,32 +70,17 @@ const SerialsList = () => {
     }
   };
 
-  /* eslint-disable no-param-reassign */
   const switchStatus = () => {
     if (!status) {
-      chrome.action.setIcon({
-        path: {
-          16: '/images/get_started16.png',
-          32: '/images/get_started32.png',
-          48: '/images/get_started48.png',
-          128: '/images/get_started128.png',
-        },
-      });
+      setEnabledIcons();
     } else {
-      chrome.action.setBadgeBackgroundColor({ color: [0, 0, 0, 0] });
-      chrome.action.setBadgeText({ text: `` });
-      chrome.action.setIcon({
-        path: {
-          16: '/images/disabled-16x16.png',
-          32: '/images/disabled-32x32.png',
-          48: '/images/disabled-48x48.png',
-          128: '/images/disabled-128x128.png',
-        },
-      });
+      setDisabledIcons();
+      localStorage.removeItem('status');
+      localStorage.removeItem('serialsData');
     }
     setStatus(!status);
   };
-  /* eslint-enable no-param-reassign */
+
   return (
     <div>
       <img src={logo} alt="logo" width="300px" />
