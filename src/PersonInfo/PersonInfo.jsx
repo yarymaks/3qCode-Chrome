@@ -21,7 +21,7 @@ const PersonInfo = ({ castData }) => {
     personInfo = result;
   };
 
-  castData !== [] ? getOldestPerson() : '';
+  getOldestPerson();
 
   return (
     <div>
