@@ -28,9 +28,9 @@ const SerialsList = () => {
     fetchData();
   }, [serialsData]);
 
+  /* eslint-disable no-param-reassign */
   const switchStatus = () => {
     const toggle = document.getElementById('switch-extension-toggle');
-    console.log(chrome.action);
     if (!status) {
       fetchData();
       toggle.checked = true;
@@ -57,7 +57,7 @@ const SerialsList = () => {
     }
     setStatus(!status);
   };
-
+  /* eslint-enable no-param-reassign */
   return (
     <div>
       <img src={logo} alt="logo" width="300px" />
