@@ -10,9 +10,25 @@ const SerialsList = () => {
   const [serialsData, setSerialsData] = useState([]);
   const [error, setError] = useState(false);
 
+  useEffect(() => {}, []);
+
   useEffect(() => {
-    fetchData();
+    const data = JSON.parse(localStorage.getItem('serialsData'));
+    data !== null
+      ? data.length === 0
+        ? fetchData()
+        : setSerialsData(data)
+      : '';
+    const dataStatus = JSON.parse(localStorage.getItem('status'));
+    const toggle = document.getElementById('switch-extension-toggle');
+    dataStatus ? (toggle.checked = true) : (toggle.checked = false);
+    setStatus(dataStatus);
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem('serialsData', JSON.stringify(serialsData));
+    localStorage.setItem('status', JSON.stringify(status));
+  }, [serialsData, status]);
 
   const fetchData = async () => {
     try {
