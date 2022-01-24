@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import FirstTab from '../FirstTab';
 import SecondTab from '../SecondTab';
 import ThirdTab from '../ThirdTab';
@@ -11,27 +11,10 @@ import Filter from '../Filter';
 
 const ExtensionMenu = ({ serialsData }) => {
   const [numberOfMenu, setNumberOfMenu] = useState(0);
-  const [runtimeData, setRuntimeData] = useState([]);
-  const [smallestSerial, setSmallestSerial] = useState([]);
-  const [biggestSerial, setBiggestSerial] = useState([]);
-
   const [filter, setFilter] = useState('');
-  useEffect(() => {
-    if (runtimeData.length === 0) {
-      runtimeSerials();
-    } else if (runtimeData.length !== 0) {
-      setSmallestSerial(
-        runtimeData.reduce((prev, curr) => {
-          return prev.runtime < curr.runtime ? prev : curr;
-        }),
-      );
-      setBiggestSerial(
-        runtimeData.reduce((prev, curr) => {
-          return prev.runtime > curr.runtime ? prev : curr;
-        }),
-      );
-    }
-  }, [runtimeData]);
+  const result = {};
+  const counter = [];
+  let smallestSerial, biggestSerial;
 
   const changeFilter = e => {
     setFilter(e.currentTarget.value);
@@ -42,11 +25,22 @@ const ExtensionMenu = ({ serialsData }) => {
   const filteredSerials = serialsData.filter(serial => {
     return serial._embedded.show.name.toLowerCase().includes(normalizedFilter);
   });
-  chrome.action.setBadgeBackgroundColor({ color: [255, 0, 0, 255] });
-  chrome.action.setBadgeText({
-    text: `${filteredSerials.length > 0 ? filteredSerials.length + 1 : 0}`,
-  });
+
+  const premieredSerials = () => {
+    const values = [];
+    filteredSerials.map(({ _embedded }) => {
+      const newValue = _embedded.show.premiered.slice(0, 4);
+      values.push(newValue);
+    });
+    counter.push(
+      values.forEach(premier => {
+        result[premier] = result[premier] + 1 || 1;
+      }),
+    );
+  };
+
   const runtimeSerials = () => {
+    const values = [];
     filteredSerials.map(({ _embedded }) => {
       if (_embedded.show.runtime !== null) {
         let image;
@@ -62,9 +56,16 @@ const ExtensionMenu = ({ serialsData }) => {
           premiered: _embedded.show.premiered,
           url: _embedded.show.url,
         };
-        setRuntimeData(prevArray => [...prevArray, newValue]);
+        values.push(newValue);
       }
     });
+    smallestSerial = values.reduce((prev, curr) => {
+      return prev.runtime < curr.runtime ? prev : curr;
+    });
+    biggestSerial = values.reduce((prev, curr) => {
+      return prev.runtime > curr.runtime ? prev : curr;
+    });
+    premieredSerials();
   };
 
   const changeTabs = e => {
@@ -80,33 +81,64 @@ const ExtensionMenu = ({ serialsData }) => {
     for (let i = 0; i < buttons.children.length; i++) {
       if (buttons.children[i].classList.contains('active')) {
         setNumberOfMenu(i);
-        runtimeSerials();
       }
     }
     return e.target.blur();
   };
 
+  const clear = () => {
+    for (const prop of Object.keys(result)) {
+      delete result[prop];
+    }
+    counter.splice(0, counter.length);
+    smallestSerial = '';
+    biggestSerial = '';
+  };
+
+  chrome.action.setBadgeBackgroundColor({ color: [255, 0, 0, 255] });
+  chrome.action.setBadgeText({
+    text: `${filteredSerials.length > 0 ? filteredSerials.length + 1 : 0}`,
+  });
+
+  filteredSerials.length !== 0 ? runtimeSerials() : clear();
+
   return (
     <>
       <TabsList changeTabs={changeTabs} />
-      {numberOfMenu === 0 ? (
-        <>
-          <Filter value={filter} onChange={changeFilter} />
-          <FirstTab serials={filteredSerials} />
-        </>
-      ) : numberOfMenu === 1 ? (
-        <SecondTab serials={filteredSerials} />
-      ) : numberOfMenu === 2 ? (
-        <ThirdTab
-          smallestSerial={smallestSerial}
-          biggestSerial={biggestSerial}
-        />
-      ) : (
-        <FourthTab
-          smallestSerialCastId={smallestSerial.id}
-          biggestSerialCastId={biggestSerial.id}
-        />
-      )}
+      <div className="container">
+        {numberOfMenu === 0 ? (
+          <>
+            <Filter value={filter} onChange={changeFilter} />
+            {smallestSerial === `` ? (
+              `Sorry we haven't data. Try to write other serial`
+            ) : (
+              <FirstTab serials={filteredSerials} />
+            )}
+          </>
+        ) : numberOfMenu === 1 ? (
+          Object.keys(result).length === 0 ? (
+            `Sorry we haven't data for this Tab. See information in Tab1`
+          ) : (
+            <SecondTab result={result} />
+          )
+        ) : numberOfMenu === 2 ? (
+          smallestSerial === `` ? (
+            `Sorry we haven't data for this Tab. See information in Tab1`
+          ) : (
+            <ThirdTab
+              smallestSerial={smallestSerial}
+              biggestSerial={biggestSerial}
+            />
+          )
+        ) : smallestSerial === '' ? (
+          `Sorry we haven't data for this Tab. See information in Tab1`
+        ) : (
+          <FourthTab
+            smallestSerialCastId={smallestSerial.id}
+            biggestSerialCastId={biggestSerial.id}
+          />
+        )}
+      </div>
     </>
   );
 };

@@ -4,6 +4,7 @@ import { createUseStyles } from 'react-jss';
 const useStyles = createUseStyles({
   Container: {
     width: '300px',
+    textAlign: 'center',
   },
 });
 

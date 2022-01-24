@@ -10,6 +10,10 @@ const SerialsList = () => {
   const [serialsData, setSerialsData] = useState([]);
   const [error, setError] = useState(false);
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const fetchData = async () => {
     try {
       const serials = await fetchSerials();
@@ -19,21 +23,10 @@ const SerialsList = () => {
       setError(`${err}`);
     }
   };
-  // useEffect(() => {
-  //   const localStatus = JSON.parse(localStorage.getItem('status'));
-  //   setStatus(localStatus);
-  // }, []);
-
-  useEffect(() => {
-    fetchData();
-  }, [serialsData]);
 
   /* eslint-disable no-param-reassign */
   const switchStatus = () => {
-    const toggle = document.getElementById('switch-extension-toggle');
     if (!status) {
-      fetchData();
-      toggle.checked = true;
       chrome.action.setIcon({
         path: {
           16: '/images/get_started16.png',
@@ -43,7 +36,6 @@ const SerialsList = () => {
         },
       });
     } else {
-      toggle.checked = false;
       chrome.action.setBadgeBackgroundColor({ color: [0, 0, 0, 0] });
       chrome.action.setBadgeText({ text: `` });
       chrome.action.setIcon({

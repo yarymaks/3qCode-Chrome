@@ -1,5 +1,18 @@
+.container {
+  border: 1px solid black;
+  border-top: none;
+}
+h2 {
+  margin-block-start: 0;
+  padding-top: 20px;
+  text-align: center;
+}
+ul {
+  padding: 0;
+}
 .toolbar {
   display: flex;
+  margin-top: 20px;
 }
 
 .switch-extension {
@@ -61,7 +74,7 @@
   z-index: 2;
   pointer-events: none;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
-  transform: translateX(3px);
+  transform: translateX(24px);
   transition: transform 300ms linear;
 }
 
@@ -74,7 +87,7 @@
 }
 
 .switch-extension__toggle:checked ~ .switch-extension__marker {
-  transform: translateX(25px);
+  transform: translateX(3px);
 }
 
 /* tabs */

@@ -21,7 +21,7 @@ const ExtensionToggle = ({ switchStatus }) => {
           <div aria-hidden="true" className="switch-extension__marker"></div>
         </div>
       </div>
-      <span>Off / On</span>
+      <span>On / Off</span>
     </div>
   );
 };
