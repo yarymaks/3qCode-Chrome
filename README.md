@@ -51,4 +51,4 @@ kolorową.
 
 <img src="./InstructionImages/image10.jpg"/>
 
-### Wtyczka została dodana do Google Chrome i urochomiona
+### Wtyczka została dodana do Google Chrome i uruchomiona
