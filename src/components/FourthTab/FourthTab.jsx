@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { fetchhSerialsCast } from '../../API/serialsAPI';
 import PersonInfo from '../PersonInfo';
 
@@ -33,4 +33,10 @@ const FourthTab = ({ smallestSerialCastId, biggestSerialCastId }) => {
     </>
   );
 };
+
+FourthTab.propTypes = {
+  smallestSerialCastId: PropTypes.number.isRequired,
+  biggestSerialCastId: PropTypes.number,
+};
+
 export default FourthTab;

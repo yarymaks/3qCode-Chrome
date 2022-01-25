@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 import React from 'react';
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 import FirstTab from '../FirstTab';
 import SecondTab from '../SecondTab';
 import ThirdTab from '../ThirdTab';
@@ -112,20 +113,20 @@ const ExtensionMenu = ({ serialsData }) => {
           <>
             <Filter value={filter} onChange={changeFilter} />
             {smallestSerial === `` ? (
-              `Sorry we haven't data. Try to write other serial`
+              <p>Sorry we haven't data. Try to write other serial</p>
             ) : (
               <FirstTab serials={filteredSerials} />
             )}
           </>
         ) : numberOfMenu === 1 ? (
           Object.keys(result).length === 0 ? (
-            `Sorry we haven't data for this Tab. See information in Tab1`
+            <p>Sorry we haven't data for this Tab. See information in Tab1</p>
           ) : (
             <SecondTab result={result} />
           )
         ) : numberOfMenu === 2 ? (
           smallestSerial === `` ? (
-            `Sorry we haven't data for this Tab. See information in Tab1`
+            <p>Sorry we haven't data for this Tab. See information in Tab1</p>
           ) : (
             <ThirdTab
               smallestSerial={smallestSerial}
@@ -133,7 +134,7 @@ const ExtensionMenu = ({ serialsData }) => {
             />
           )
         ) : smallestSerial === '' ? (
-          `Sorry we haven't data for this Tab. See information in Tab1`
+          <p>Sorry we haven't data for this Tab. See information in Tab1</p>
         ) : (
           <FourthTab
             smallestSerialCastId={smallestSerial.id}
@@ -144,4 +145,9 @@ const ExtensionMenu = ({ serialsData }) => {
     </>
   );
 };
+
+ExtensionMenu.propTypes = {
+  serialsData: PropTypes.array.isRequired,
+};
+
 export default ExtensionMenu;

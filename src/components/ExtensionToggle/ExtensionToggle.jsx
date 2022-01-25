@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const ExtensionToggle = ({ switchStatus }) => {
   return (
@@ -24,6 +25,10 @@ const ExtensionToggle = ({ switchStatus }) => {
       <span>On / Off</span>
     </div>
   );
+};
+
+ExtensionToggle.propTypes = {
+  switchStatus: PropTypes.func.isRequired,
 };
 
 export default ExtensionToggle;

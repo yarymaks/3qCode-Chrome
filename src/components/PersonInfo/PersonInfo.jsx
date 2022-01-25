@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const PersonInfo = ({ castData }) => {
   let personInfo;
@@ -24,6 +25,7 @@ const PersonInfo = ({ castData }) => {
 
   getOldestPerson();
 
+  console.log(castData);
   return (
     <div>
       {personInfo.map(({ person }) => {
@@ -37,4 +39,9 @@ const PersonInfo = ({ castData }) => {
     </div>
   );
 };
+
+PersonInfo.propTypes = {
+  castData: PropTypes.array.isRequired,
+};
+
 export default PersonInfo;

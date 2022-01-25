@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 const TwoSerials = ({ smallestSerial, biggestSerial }) => {
   return (
     <div>
@@ -34,6 +35,25 @@ const TwoSerials = ({ smallestSerial, biggestSerial }) => {
       </div>
     </div>
   );
+};
+
+TwoSerials.propTypes = {
+  smallestSerial: PropTypes.shape({
+    name: PropTypes.string,
+    type: PropTypes.string,
+    premiered: PropTypes.string,
+    url: PropTypes.string,
+    image: PropTypes.string,
+    runtime: PropTypes.number,
+  }).isRequired,
+  biggestSerial: PropTypes.shape({
+    name: PropTypes.string,
+    type: PropTypes.string,
+    premiered: PropTypes.string,
+    url: PropTypes.string,
+    image: PropTypes.string,
+    runtime: PropTypes.number,
+  }).isRequired,
 };
 
 export default TwoSerials;

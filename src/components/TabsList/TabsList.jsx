@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 const TabsList = ({ changeTabs }) => {
   return (
     <section className="tabs">
@@ -19,4 +20,9 @@ const TabsList = ({ changeTabs }) => {
     </section>
   );
 };
+
+TabsList.propTypes = {
+  changeTabs: PropTypes.func.isRequired,
+};
+
 export default TabsList;

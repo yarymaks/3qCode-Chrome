@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import ExtensionToggle from '../ExtensionToggle';
 import ExtensionMenu from '../ExtensionMenu';
 import logo from '../../images/logo.png';
+import PropTypes from 'prop-types';
 import { fetchSerials } from '../../API/serialsAPI';
 
 const SerialsList = () => {
@@ -91,6 +92,10 @@ const SerialsList = () => {
       {status ? <ExtensionMenu serialsData={serialsData} /> : ''}
     </div>
   );
+};
+
+SerialsList.propTypes = {
+  status: PropTypes.bool,
 };
 
 export default SerialsList;

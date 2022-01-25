@@ -1,5 +1,6 @@
 import React from 'react';
 import useStyles from './FilterStyles';
+import PropTypes from 'prop-types';
 import SearchIcon from '@mui/icons-material/Search';
 
 const Filter = ({ value, onChange }) => {
@@ -22,4 +23,10 @@ const Filter = ({ value, onChange }) => {
     </>
   );
 };
+
+Filter.propTypes = {
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
+
 export default Filter;

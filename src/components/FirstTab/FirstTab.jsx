@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import notAvailable from '../../images/notFound.jpg';
 
 const FirstTab = ({ serials }) => {
@@ -25,6 +26,27 @@ const FirstTab = ({ serials }) => {
       })}
     </ul>
   );
+};
+
+FirstTab.propTypes = {
+  serials: PropTypes.arrayOf(
+    PropTypes.shape({
+      _embedded: PropTypes.objectOf(
+        PropTypes.shape({
+          show: PropTypes.objectOf(
+            PropTypes.shape({
+              id: PropTypes.number.isRequired,
+              name: PropTypes.string.isRequired,
+              type: PropTypes.string.isRequired,
+              premiered: PropTypes.string.isRequired,
+              url: PropTypes.string.isRequired,
+              image: PropTypes.array,
+            }),
+          ),
+        }),
+      ).isRequired,
+    }),
+  ).isRequired,
 };
 
 export default FirstTab;

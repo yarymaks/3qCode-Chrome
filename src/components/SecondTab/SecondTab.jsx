@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const SecondTab = ({ result }) => {
   return (
@@ -20,4 +21,9 @@ const SecondTab = ({ result }) => {
     </>
   );
 };
+
+SecondTab.propTypes = {
+  result: PropTypes.shape({ key: PropTypes.string }).isRequired,
+};
+
 export default SecondTab;
