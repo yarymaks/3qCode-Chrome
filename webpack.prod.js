@@ -1,6 +1,7 @@
-const { merge } = require("webpack-merge");
-const config = require("./webpack.config");
+const { merge } = require('webpack-merge');
+const config = require('./webpack.config');
 
 module.exports = merge(config, {
-  mode: "production",
+  mode: 'production',
+  devtool: 'inline-source-map',
 });
