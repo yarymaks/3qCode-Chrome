@@ -7,8 +7,6 @@ import FourthTab from '../FourthTab';
 import TabsList from '../TabsList';
 import Filter from '../Filter';
 
-// const optionRender = [<FirstTab />, <SecondTab />, <ThirdTab />, <FourthTab />];
-
 const ExtensionMenu = ({ serialsData }) => {
   const [numberOfMenu, setNumberOfMenu] = useState(0);
   const [filter, setFilter] = useState('');
@@ -102,41 +100,29 @@ const ExtensionMenu = ({ serialsData }) => {
 
   filteredSerials.length !== 0 ? runtimeSerials() : clear();
 
+  const optionRender = [
+    <FirstTab serials={filteredSerials} />,
+    <SecondTab result={result} />,
+    <ThirdTab smallestSerial={smallestSerial} biggestSerial={biggestSerial} />,
+    <FourthTab
+      smallestSerialCastId={smallestSerial.id}
+      biggestSerialCastId={biggestSerial.id}
+    />,
+  ];
+
   return (
     <>
       <TabsList changeTabs={changeTabs} />
       <div className="container">
-        {numberOfMenu === 0 ? (
+        {smallestSerial === `` ? (
+          `Sorry we haven't data. Try to write other serial`
+        ) : numberOfMenu === 0 ? (
           <>
             <Filter value={filter} onChange={changeFilter} />
-            {smallestSerial === `` ? (
-              `Sorry we haven't data. Try to write other serial`
-            ) : (
-              <FirstTab serials={filteredSerials} />
-            )}
+            {optionRender[numberOfMenu]}
           </>
-        ) : numberOfMenu === 1 ? (
-          Object.keys(result).length === 0 ? (
-            `Sorry we haven't data for this Tab. See information in Tab1`
-          ) : (
-            <SecondTab result={result} />
-          )
-        ) : numberOfMenu === 2 ? (
-          smallestSerial === `` ? (
-            `Sorry we haven't data for this Tab. See information in Tab1`
-          ) : (
-            <ThirdTab
-              smallestSerial={smallestSerial}
-              biggestSerial={biggestSerial}
-            />
-          )
-        ) : smallestSerial === '' ? (
-          `Sorry we haven't data for this Tab. See information in Tab1`
         ) : (
-          <FourthTab
-            smallestSerialCastId={smallestSerial.id}
-            biggestSerialCastId={biggestSerial.id}
-          />
+          optionRender[numberOfMenu]
         )}
       </div>
     </>
