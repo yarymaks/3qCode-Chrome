@@ -29,7 +29,7 @@ const ExtensionMenu = ({ serialsData }) => {
     const values = [];
     filteredSerials.map(({ _embedded }) => {
       const newValue = _embedded.show.premiered.slice(0, 4);
-      values.push(newValue);
+      return values.push(newValue);
     });
     counter.push(
       values.forEach(premier => {
