@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React from 'react';
 import { useState } from 'react';
 import FirstTab from '../FirstTab';

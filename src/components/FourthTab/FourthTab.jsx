@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { fetchhSerialsCast } from '../../API/serialsAPI';
-import PersonInfo from '../../PersonInfo';
+import PersonInfo from '../PersonInfo';
 
 const FourthTab = ({ smallestSerialCastId, biggestSerialCastId }) => {
   const [castData, setCastData] = useState([]);
