@@ -9,6 +9,7 @@ const FourthTab = ({ smallestSerialCastId, biggestSerialCastId }) => {
 
   useEffect(() => {
     fetchCast();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchCast = async () => {

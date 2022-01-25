@@ -6,7 +6,7 @@ const PersonInfo = ({ castData }) => {
   const getOldestPerson = () => {
     const result = [];
     castData.map(index => {
-      result.push(
+      return result.push(
         index.reduce((prevData, currData) => {
           if (currData.person !== null && prevData !== null) {
             return Math.floor(

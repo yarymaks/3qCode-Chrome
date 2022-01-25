@@ -57,6 +57,7 @@ const ExtensionMenu = ({ serialsData }) => {
         };
         values.push(newValue);
       }
+      return values;
     });
     smallestSerial = values.reduce((prev, curr) => {
       return prev.runtime < curr.runtime ? prev : curr;
@@ -64,7 +65,7 @@ const ExtensionMenu = ({ serialsData }) => {
     biggestSerial = values.reduce((prev, curr) => {
       return prev.runtime > curr.runtime ? prev : curr;
     });
-    premieredSerials();
+    return premieredSerials();
   };
 
   const changeTabs = e => {
