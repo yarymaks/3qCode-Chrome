@@ -15,10 +15,11 @@ const PersonInfo = ({ castData }) => {
               ? prevData
               : currData;
           }
+          return '';
         }),
       );
     });
-    personInfo = result;
+    return (personInfo = result);
   };
 
   getOldestPerson();
