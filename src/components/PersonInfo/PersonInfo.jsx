@@ -25,7 +25,6 @@ const PersonInfo = ({ castData }) => {
 
   getOldestPerson();
 
-  console.log(castData);
   return (
     <div>
       {personInfo.map(({ person }) => {

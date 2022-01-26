@@ -18,16 +18,16 @@ const OneSerial = ({ smallestSerial }) => {
     </div>
   );
 };
+
 OneSerial.propTypes = {
-  smallestSerial: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string,
-      type: PropTypes.string,
-      premiered: PropTypes.string,
-      url: PropTypes.string,
-      image: PropTypes.string,
-      runtime: PropTypes.number,
-    }),
-  ).isRequired,
+  smallestSerial: PropTypes.shape({
+    name: PropTypes.string,
+    type: PropTypes.string,
+    premiered: PropTypes.string,
+    url: PropTypes.string,
+    image: PropTypes.string,
+    runtime: PropTypes.number,
+  }).isRequired,
 };
+
 export default OneSerial;

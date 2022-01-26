@@ -19,20 +19,11 @@ const SerialsList = () => {
       ? data.length === 0
         ? fetchData()
         : setSerialsData(data)
-      : '';
+      : fetchData();
     const dataStatus = JSON.parse(localStorage.getItem('status'));
     const toggle = document.getElementById('switch-extension-toggle');
     dataStatus ? (toggle.checked = true) : (toggle.checked = false);
-    chrome.action.setIcon({
-      path: {
-        16: '/images/get_started16.png',
-        32: '/images/get_started32.png',
-        48: '/images/get_started48.png',
-        128: '/images/get_started128.png',
-      },
-    });
     setStatus(dataStatus);
-    setEnabledIcons();
   }, []);
 
   const setEnabledIcons = () => {
