@@ -2,7 +2,7 @@
 
 ## Uruchomienie wtyczki do Google Chrome
 
-Dla uruchomienia wtyczki w Google Chrome jest Ci potrzebny archiwum projekta.
+Dla uruchomienia wtyczki w Google Chrome jest Ci potrzebne archiwum projektu.
 
 <img src="./InstructionImages/image1.jpg"/>
 
@@ -14,7 +14,7 @@ Po rozpakowywaniu archiwum będzie Ci potrzebny folder `dist`.
 
 <img src="./InstructionImages/image3.jpg"/>
 
-Dalej, otwórz przęglądarkę Google Chrome. Przejdż po adresu.
+Dalej, otwórz przęglądarkę Google Chrome. Przejdź pod adresem.
 
 ```
 chrome://extensions/
@@ -28,7 +28,7 @@ W lewym górnym rogu znajduje się przycisk Load unpacked.
 
 <img src="./InstructionImages/image5.jpg"/>
 
-W oknie przejdż do adresu foldera w którym znajduje się folder dist. Zaznać
+W oknie przejdż do adresu foldera w którym znajduje się folder dist. Zaznacz
 folder lewym jednym przyciskiem myszki i kliknij otwórz folder.
 
 <img src="./InstructionImages/image6.jpg"/>
@@ -50,5 +50,7 @@ Aby urochomić wtyczkę kliknij przełącznik w pozycju On. Zmieni się ikonka n
 kolorową.
 
 <img src="./InstructionImages/image10.jpg"/>
+
+Po uruchomieniu trzeba chwilę poczekać na pobranie seriałów.
 
 ### Wtyczka została dodana do Google Chrome i uruchomiona
