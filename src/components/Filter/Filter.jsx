@@ -8,15 +8,16 @@ const Filter = ({ value, onChange }) => {
   return (
     <>
       <h2>Find serial</h2>
-      <label className={classes.Filter}>
+      <label className={classes.Filter} htmlFor="search">
         <input
+          id="search"
           type="text"
           value={value}
           onChange={onChange}
           placeholder="Search"
           maxLength="10"
         />
-        <div className={classes.icon}>
+        <div data-testid="icon" className={classes.icon}>
           <SearchIcon />
         </div>
       </label>
@@ -25,7 +26,7 @@ const Filter = ({ value, onChange }) => {
 };
 
 Filter.propTypes = {
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
 };
 
