@@ -3,5 +3,5 @@ const config = require('./webpack.config');
 
 module.exports = merge(config, {
   mode: 'production',
-  devtool: 'inline-source-map',
+  devtool: 'nosources-source-map',
 });
